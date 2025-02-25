@@ -15,11 +15,10 @@ import java.util.List;
 public class Categories {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id ;
+    private Long id;
     private String type;
-    private Double price;
 
-    @OneToMany(mappedBy = "categories")
+    @OneToMany(mappedBy = "category")
     @JsonManagedReference
     private List<Product> products;
 }

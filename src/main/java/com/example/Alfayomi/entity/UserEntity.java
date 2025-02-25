@@ -1,10 +1,9 @@
 package com.example.Alfayomi.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
-import org.antlr.v4.runtime.misc.NotNull;
 import org.springframework.lang.NonNull;
 
 import java.util.List;
@@ -24,22 +23,31 @@ public class UserEntity {
     private String firstName;
     @NonNull
     private String lastName;
-    @NonNull
+
+    @NotBlank(message = "email is required")
+    @Column(unique = true)
     private String email;
+
+    @NotBlank(message = "password is required")
     private String password;
     @NonNull
     private String city;
-    @NonNull
+
+    @NotBlank(message = "address is required")
     private String address;
-    @NonNull
+
+    @NotBlank(message = "Phone is required")
+    @Column(unique = true)
     private String phone;
+
     private Role role;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Cart cart;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
-    private List<Order> orders;
+    private List<UserOrder> userOrders;
 
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<Rate> rates;
 }
