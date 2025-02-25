@@ -29,11 +29,11 @@ public class UserOrder {
     @JsonBackReference
     private UserEntity user;
 
-    @OneToMany(mappedBy = "order" , cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userOrder" , cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<OrderItem> orderItem;
 
-    @OneToMany(mappedBy = "order" , cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userOrder" , cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<PromoCode> promoCodes;
 }
