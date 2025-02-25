@@ -17,19 +17,19 @@ public class Rate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false , unique = true)
-    @Size(min = 1 , max = 10 , message = "rate must be between 1 and 10 ")
+    @Column(nullable = false )
+    @Size(min = 1 , max = 5 , message = "rate must be between 1 and 5 ")
     private float rating;
 
     private String review;
 
     @ManyToOne
-    @JoinTable(name = "product_id")
+    @JoinColumn(name = "product_id" , nullable = false)
     @JsonBackReference
     private Product product;
 
     @ManyToOne
-    @JoinTable(name = "user_id")
+    @JoinColumn(name = "user_id")
     @JsonBackReference
     private UserEntity user;
 }
