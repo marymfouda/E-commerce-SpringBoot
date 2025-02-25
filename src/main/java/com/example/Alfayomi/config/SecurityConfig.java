@@ -31,9 +31,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authRequest -> {
                     authRequest
                             .requestMatchers(HttpMethod.POST , "/api/Product/**" ).permitAll()
-//                          .requestMatchers("/api/v2/vacRec/create/**").hasAuthority("EMPLOYEE")
-//                          .requestMatchers("/api/v1/employee/profile/**").hasAuthority("EMPLOYEE")
-//                          .requestMatchers("/api/v1/employee/**" , "/api/v2/vacRec/**" , "/api/v3/Attendance/**" ).hasAuthority("ADMIN")
                             .anyRequest().permitAll();
                 })
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

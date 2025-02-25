@@ -84,9 +84,9 @@ public class ProductServicesImpl implements ProductServices {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Product> getProductByCategoryAndPrice(Long id, float minPrice, float maxPrice) {
+    public List<Product> getProductByCategoryAndPrice(String type, float minPrice, float maxPrice) {
         log.info("Fetching product by category and price");
-        return productRepo.findByCategoryIdAndPriceBetween(id , minPrice , maxPrice);
+        return productRepo.findByCategoryIdAndPriceBetween(type , minPrice , maxPrice);
     }
 
     @Override

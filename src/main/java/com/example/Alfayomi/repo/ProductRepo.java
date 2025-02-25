@@ -20,8 +20,8 @@ public interface ProductRepo extends JpaRepository<Product,Long> {
     @Query("SELECT a FROM Product a WHERE a.category.type = :categoryType")
     List<Product> findByCategory(@Param("categoryType") String categoryType);
 
-    @Query("SELECT a FROM Product a WHERE a.category.id = :categoryId AND a.price BETWEEN :minPrice AND :maxPrice")
-    List<Product> findByCategoryIdAndPriceBetween(@Param("categoryId") Long categoryId,
+    @Query("SELECT a FROM Product a WHERE a.category.type = :categoryId AND a.price BETWEEN :minPrice AND :maxPrice")
+    List<Product> findByCategoryIdAndPriceBetween(@Param("categoryType") String categoryType,
                                                   @Param("minPrice") float minPrice,
                                                   @Param("maxPrice") float maxPrice);
 

@@ -2,6 +2,7 @@ package com.example.Alfayomi.controller;
 
 import com.example.Alfayomi.entity.Product;
 import com.example.Alfayomi.service.ProductServices;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,7 +20,6 @@ public class ProductController {
 
     private final ProductServices productServices;
 
-
     public ProductController(ProductServices productServices) {
         this.productServices = productServices;
     }
@@ -29,11 +29,24 @@ public class ProductController {
         List<Product> product = productServices.getAllProduct();
         return ResponseEntity.ok(product);
     }
-    @GetMapping("/getProductByCategory")
-    public ResponseEntity<List<Product>> getProductByCategory(){
-        List<Product> product = productServices.getAllProduct();
+    @GetMapping("/getProductByCategory/{type}")
+    public ResponseEntity<List<Product>> getProductByCategory(@PathVariable String type){
+        List<Product> product = productServices.getProductByCategory(type);
         return ResponseEntity.ok(product);
     }
+    @GetMapping("/getProductByPrice")
+    public ResponseEntity<List<Product>> getProductByPrice(@RequestParam float minPrice ,
+                                                           @RequestParam float maxPrice){
+        List<Product> products = productServices.getProductByPrice(minPrice, maxPrice);
+        return ResponseEntity.ok().body(products);
+    }
+    public ResponseEntity<List<Product>> getProductByCategoryAndPrice(@RequestParam String type ,
+                                                                      @RequestParam float minPrice ,
+                                                                      @RequestParam float maxPrice){
+        List<Product> filterProducts = productServices.getProductByCategoryAndPrice(type, minPrice, maxPrice);
+        return ResponseEntity.ok().body(filterProducts);
+    }
+
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable Long id){
@@ -57,14 +70,11 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Product updated successfully ");
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable Long id) {
 
         Product product = productServices.getProduct(id);
         productServices.deleteProduct(id);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product with id " + id + " deleted successfully");
 
     }
-
-
-
 }

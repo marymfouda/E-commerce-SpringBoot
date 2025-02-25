@@ -13,8 +13,8 @@ public interface ProductServices {
     List<Product> getAllProduct();
     Page<Product> findAllWithPaginationAndSort(int offset , int pageSize , String field);
     Product getProduct(Long id);
-    List<Product> getProductByCategory(String type );
-    List<Product> getProductByCategoryAndPrice(Long id , float minPrice , float maxPrice);
+    List<Product> getProductByCategory(String type);
+    List<Product> getProductByCategoryAndPrice(String type , float minPrice , float maxPrice);
     List<Product> getProductByPrice(float minPrice , float maxPrice);
     Product createProduct(Product product) throws IOException;
     Product updateProduct(Long id , Product product);
