@@ -1,5 +1,6 @@
 package com.example.Alfayomi.config;
 
+import com.example.Alfayomi.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,12 +18,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 public class SecurityConfig {
-    private final AppUserDetailsServices appUserDetailsServices;
 
-    public SecurityConfig(AppUserDetailsServices appUserDetailsServices) {
+    private final AppUserDetailsServices appUserDetailsServices;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+
+    public SecurityConfig(AppUserDetailsServices appUserDetailsServices, JwtAuthenticationFilter jwtAuthenticationFilter) {
         this.appUserDetailsServices = appUserDetailsServices;
+        this.jwtAuthenticationFilter = jwtAuthenticationFilter;
     }
-//    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception{
@@ -34,8 +38,8 @@ public class SecurityConfig {
                             .anyRequest().permitAll();
                 })
                 .sessionManagement(config -> config.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authenticationProvider(authenticationProvider());
-//                .addFilterBefore(jwtAuthenticationFilter , UsernamePasswordAuthenticationFilter.class);
+                .authenticationProvider(authenticationProvider())
+                .addFilterBefore(jwtAuthenticationFilter , UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
     @Bean
